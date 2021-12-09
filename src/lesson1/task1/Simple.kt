@@ -133,4 +133,5 @@ fun numberRevert(number: Int): Int { // 100 / 10 = 10 -- 100 / 10.0 = 10.0
     val dig3: Int = (number / 100)
 
     return (dig1 * 100) + (dig2 * 10) + dig3
-}
+}//numberRevert
+
