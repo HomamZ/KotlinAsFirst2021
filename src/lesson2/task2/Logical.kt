@@ -31,11 +31,10 @@ fun isNumberHappy(number: Int): Boolean = (number / 1000 + number / 100 % 10) ==
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     val queenRc = y2 == y1 || x2 == x1
-    val queenSlp = abs(y2 - y2) == abs(x2 - x1)
+    val queenSlp = abs(y2 - y1) == abs(x2 - x1)
     return queenRc || queenSlp
-
-
-}// end of function queenThreatens
+}
+// end of function queenThreatens
 
 
 /**
