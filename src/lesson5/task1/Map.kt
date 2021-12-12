@@ -289,7 +289,7 @@ fun setOfFriends(
         if (friend !in set) setOfFriends(friends, friend, set)
     }
     return set
-}
+}//edn setOfFriends
 
 fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
     val map = mutableMapOf<String, Set<String>>()
@@ -352,4 +352,32 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    if (treasures.isEmpty()) return setOf()
+    val res = mutableSetOf<String>()
+    val listOfMass = mutableListOf<Int>()
+    val listOfPrices = mutableListOf<Int>()
+    val listOfTreasures = mutableListOf<String>()
+    val prices = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    for ((key, value) in treasures) {
+        listOfPrices.add(value.second)
+        listOfMass.add(value.first)
+        listOfTreasures.add(key)
+    }
+    for (index in 1..treasures.size)
+        for (mass in 0..capacity)
+            if (mass >= listOfMass[index - 1])
+                prices[index][mass] = maxOf(prices[index - 1][mass], listOfPrices[index - 1])
+            else
+                prices[index][mass] = prices[index - 1][mass]
+    var m = capacity
+    var i = treasures.size
+    while (i > 0) {
+        if (prices[i][m] != prices[i - 1][m]) {
+            res.add(listOfTreasures[i - 1])
+            m -= listOfMass[i - 1]
+        }
+        i--
+    }
+    return res
+}//end bagPacking
