@@ -54,7 +54,9 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  */
 fun main() {
     val x1x2 = quadraticRootProduct(1.0, 13.0, 42.0)
+
     println("Root product: $x1x2")
+//println("account in 3 years :  ${accountInThreeYears(100,10)} ")
 }
 
 /**
@@ -118,7 +120,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = initial * ((1.0 + percent / 100).pow(3))
+fun accountInThreeYears(initial: Int, percent: Int): Double = initial * (1 + percent / 100.00).pow(3)
 // the formula for compound interest in three years is (initial balance * interest) (initial balance * interest) (initial balance * interest)
 
 /**
