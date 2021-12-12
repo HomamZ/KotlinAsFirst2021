@@ -299,7 +299,7 @@ fun squareSequenceDigit(n: Int): Int {
         }
     }
     return digit[n - 1]
-}//end of squareSequenceDigit
+}//end of squareSequenceDigit()
 
 /**
  * Сложная (5 баллов)
