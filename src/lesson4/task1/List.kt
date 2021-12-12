@@ -126,13 +126,14 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * Модуль пустого вектора считать равным 0.0.
  */
 fun abs(v: List<Double>): Double = sqrt(v.sumOf { it * it })
-
+//end of abs()
 /**
  * Простая (2 балла)
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0 else list.sum() / list.size
+//end of mean()
 
 /**
  * Средняя (3 балла)
@@ -156,6 +157,8 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int = (a.zip(b) { elementA, elementB -> elementA * elementB }).sum()
+//end of fun times()
+
 
 /**
  * Средняя (3 балла)
@@ -166,7 +169,7 @@ fun times(a: List<Int>, b: List<Int>): Int = (a.zip(b) { elementA, elementB -> e
  * Значение пустого многочлена равно 0 при любом x.
  */
 fun polynom(p: List<Int>, x: Int): Int =
-    p.foldIndexed(0) { idx, sum, element -> sum + element * x.toDouble().pow(idx).toInt() }
+    p.foldIndexed(0) { index, sum, element -> sum + element * x.toDouble().pow(index).toInt() }
 
 /**
  * Средняя (3 балла)
@@ -242,9 +245,9 @@ fun symbolOfDigit(n: Int): String = if (n in 0..9) "$n" else "${'a' + (n - 10)}"
 
 
 fun convertToString(n: Int, base: Int): String {
-    if (n < 0 || base <= 1 || base >= 37) throw Exception("Нужно число >= 0 И оснавание должно быть внутри интервала (1, 37))")
+    if (n < 0 || base <= 1 || base >= 37) throw Exception("Нужно n >= 0 И оснавание/base должно пренадлежить интервала (1, 37))")
     return convert(n, base).joinToString("") { symbolOfDigit(it) }
-}//edn convertToString
+}//end convertToString
 
 /**
  * Средняя (3 балла)
@@ -306,15 +309,15 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-val tenList = listOf(
+val tensList = listOf(
     "", "десять", "двадцать", "тридцать", "сорок", "пятьдесят",
     "шестьдесят", "семьдесят", "восемьдесят", "девяносто"
 )
-val tenSubList = listOf(
+val tensSubList = listOf(
     "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать",
     "пятнадцать", "шестнадцать", "семьнадцать", "восемнадцать", "девятнадцать"
 )
-val hundredList =
+val hundredsList =
     listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
 
 fun bundledInThree(n: Int, unitList: List<String>, isThousand: Boolean): MutableList<String> {
@@ -322,8 +325,8 @@ fun bundledInThree(n: Int, unitList: List<String>, isThousand: Boolean): Mutable
     val hundred = n / 100 % 10
     val ten = n / 10 % 10
     val unit = n % 10
-    if (hundred != 0) returnString.add(hundredList[hundred])
-    if (ten == 1) returnString.add(tenSubList[unit]) else if (ten != 0) returnString.add(tenList[ten])
+    if (hundred != 0) returnString.add(hundredsList[hundred])
+    if (ten == 1) returnString.add(tensSubList[unit]) else if (ten != 0) returnString.add(tensList[ten])
     if (ten != 1 && unit != 0) returnString.add(unitList[unit])
     if (isThousand) {
         if (ten == 1) returnString.add("тысяч")
