@@ -63,7 +63,7 @@ fun main() {
     } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
-}
+}//end of main()
 
 
 /**
@@ -123,7 +123,7 @@ fun dateStrToDigit(str: String): String {
     }
     if (day < 1 || day > daysInMonth(month, year)) return ""
     return String.format("%02d.%02d.%d", day, month, year)
-}
+}//end of dateStrToDigit
 
 /**
  * Средняя (4 балла)
@@ -182,16 +182,16 @@ fun flattenPhoneNumber(phone: String): String = TODO()
 fun bestLongJump(jumps: String): Int {
     val score = setOf("%", "-")
     val setJumps = jumps.split(' ')
-    var maxJump = -1
+    var maxLongJump = -1
     for (jump in setJumps) {
         if (jump in score) continue
         try {
-            maxJump = maxOf(maxJump, jump.toInt())
+            maxLongJump = maxOf(maxLongJump, jump.toInt())
         } catch (e: NumberFormatException) {
             return -1
         }
     }
-    return maxJump
+    return maxLongJump
 }//end of bestLongJump()
 
 /**
@@ -208,7 +208,7 @@ fun bestLongJump(jumps: String): Int {
 fun bestHighJump(jumps: String): Int {
     val score = setOf('%', '-', '+')
     val setJumps = jumps.split(' ')
-    var maxJump = -1
+    var highJump = -1
     if (setJumps.size % 2 != 0) return -1
     for (i in setJumps.indices step 2) {
         val jump: Int
@@ -218,11 +218,11 @@ fun bestHighJump(jumps: String): Int {
         } catch (e: NumberFormatException) {
             return -1
         }
-        if (jump <= maxJump) continue
+        if (jump <= highJump) continue
         if (attempts.any { it !in score }) return -1
-        if ('+' in attempts) maxJump = maxOf(jump, maxJump)
+        if ('+' in attempts) highJump = maxOf(jump, highJump)
     }
-    return maxJump
+    return highJump
 }//end of bestHighJump()
 
 /**
@@ -258,7 +258,24 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val data = description.split("; ")
+    var mostExpensiveProduct = Pair("", -1.0)
+    for (strProduct in data) {
+        val inf = strProduct.split(' ')
+        if (inf.size != 2) return ""
+        val name = inf[0]
+        val price: Double
+        try {
+            price = inf[1].toDouble()
+        } catch (e: NumberFormatException) {
+            return ""
+        }
+        if (price < 0) return ""
+        if (price > mostExpensiveProduct.second) mostExpensiveProduct = Pair(name, price)
+    }
+    return mostExpensiveProduct.first
+}//end of mostExpensive()
 
 /**
  * Сложная (6 баллов)
