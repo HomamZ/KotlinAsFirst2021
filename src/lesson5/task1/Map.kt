@@ -1,7 +1,8 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence", "NAME_SHADOWING")
 
 package lesson5.task1
 
+import kotlin.math.max
 import lesson4.task1.mean
 
 // Урок 5: ассоциативные массивы и множества
@@ -353,31 +354,33 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    if (treasures.isEmpty()) return setOf()
-    val res = mutableSetOf<String>()
-    val listOfMass = mutableListOf<Int>()
-    val listOfPrices = mutableListOf<Int>()
-    val listOfTreasures = mutableListOf<String>()
-    val prices = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    val table = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    val a = Array(treasures.size + 1) { 0 }
+    val b = Array(treasures.size + 1) { 0 }
+    val c = Array(treasures.size + 1) { "" }
+    val result = mutableSetOf<String>()
+    val j = mutableListOf<Int>()
+    var i = 0
     for ((key, value) in treasures) {
-        listOfPrices.add(value.second)
-        listOfMass.add(value.first)
-        listOfTreasures.add(key)
+        i++
+        a[i] = value.second
+        b[i] = value.first
+        c[i] = key
     }
-    for (index in 1..treasures.size)
-        for (mass in 0..capacity)
-            if (mass >= listOfMass[index - 1])
-                prices[index][mass] = maxOf(prices[index - 1][mass], listOfPrices[index - 1])
-            else
-                prices[index][mass] = prices[index - 1][mass]
-    var m = capacity
-    var i = treasures.size
-    while (i > 0) {
-        if (prices[i][m] != prices[i - 1][m]) {
-            res.add(listOfTreasures[i - 1])
-            m -= listOfMass[i - 1]
+    for (m in 1..treasures.size)
+        for (n in 0..capacity)
+            if (n >= b[m]) {
+                table[m][n] = max(table[m - 1][n], table[m - 1][n - b[m]] + a[m])
+            } else table[m][n] = table[m - 1][n]
+    var n = capacity
+    for (m in treasures.size downTo 1) {
+        if (table[m - 1][n] != table[m][n]) {
+            j += m
+            n -= b[m]
         }
-        i--
     }
-    return res
-}//end bagPacking
+    for (i in 1 until c.size)
+        if (i in j)
+            result += c[i]
+    return result
+}//end of bagPacking()
